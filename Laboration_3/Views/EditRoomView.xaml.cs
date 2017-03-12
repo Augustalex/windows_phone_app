@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -33,9 +34,24 @@ namespace Laboration_3.Views
             App.Router.Route("MainPage");
         }
 
-        private void GetCoordsBtn_OnClick(object sender, RoutedEventArgs e)
+        private async void GetCoordsBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            var coords;
+            try
+            {
+                Geoposition coords = await App.Geolocator.GetGeopositionAsync(
+                    maximumAge: TimeSpan.FromMinutes(5),
+                    timeout: TimeSpan.FromSeconds(10)
+                );
+
+                coordinatesBlock.Text = coords.Coordinate.Point.Position.Latitude.ToString("0.00") + " " +
+                                        coords.Coordinate.Point.Position.Longitude.ToString("0.00");
+            }
+
+            catch (Exception ex)
+            {
+                coordinatesBlock.Text = "location disabled.";
+            }
+            
         }
 
         private void WallEditorBtn_OnClick(object sender, RoutedEventArgs e)

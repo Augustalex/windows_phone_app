@@ -41,7 +41,7 @@
                        VerticalAlignment="Center" Width="120"
                        Padding="20"/>
             <TextBlock Foreground="#9CC5A1" VerticalAlignment="Center"
-                       Text="test" Width="120"/>
+                       Text="test" Width="120" x:Name="coordinatesBlock"/>
             <Button Width="100" Height="30" 
                     FontSize="10" Content="Get Coordinates"
                     Background="#9CC5A1" Foreground="#216869" 
