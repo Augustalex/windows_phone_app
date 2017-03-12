@@ -20,35 +20,16 @@ namespace Laboration_3.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class EditRoomView : Page
+    public sealed partial class WallEditor : Page
     {
-        public EditRoomView()
+        public WallEditor()
         {
             this.InitializeComponent();
-
         }
 
         private void BackBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            App.Router.Route("MainPage");
+            App.Router.Route("EditRoomView");
         }
-
-        private void GetCoordsBtn_OnClick(object sender, RoutedEventArgs e)
-        {
-            var coords;
-        }
-
-        private void WallEditorBtn_OnClick(object sender, RoutedEventArgs e)
-        {
-            App.Router.Route("WallEditor");
-        }
-
-        private void SaveBtn_OnClick(object sender, RoutedEventArgs e)
-        {
-            var name = nameBox.Text;
-            var description = descriptionBox.Text;
-            var size = Convert.ToInt32(sizeBox.Text);
-        }
-
     }
 }

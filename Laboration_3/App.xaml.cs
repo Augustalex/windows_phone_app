@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Laboration_3.Router;
 using Laboration_3.Views;
 
 namespace Laboration_3
@@ -23,6 +24,7 @@ namespace Laboration_3
     /// </summary>
     sealed partial class App : Application
     {
+        public static Router.Router Router = new Router.Router();
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -30,6 +32,13 @@ namespace Laboration_3
         public App()
         {
             this.InitializeComponent();
+            Router.SetupRoutes(new List<RouterPage>
+            {
+                new RouterPage("MainPage", typeof(MainPage)),
+                new RouterPage("EditRoomView", typeof(EditRoomView)),
+                new RouterPage("WallEditor", typeof(WallEditor)),
+                new RouterPage("MyRoomsView", typeof(MyRoomsView))
+            });
             this.Suspending += OnSuspending;
         }
 
