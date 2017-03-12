@@ -120,6 +120,7 @@
     <Compile Include="Views\WallEditor.xaml.cs">
       <DependentUpon>WallEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Wall.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
