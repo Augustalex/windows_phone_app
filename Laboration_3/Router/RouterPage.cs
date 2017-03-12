@@ -7,15 +7,21 @@ using Windows.UI.Xaml.Controls;
 
 namespace Laboration_3.Router
 {
-    class RouterPage
+    public class RouterPage
     {
         private readonly Type _xamlFile;
         private readonly Dictionary<string, object> _dependencies = new Dictionary<string, object>();
-        private string _pageName;
+        private readonly string _pageName;
 
         public RouterPage(string pageName, Type xamlFile)
         {
             _pageName = pageName;
+            _xamlFile = xamlFile;
+        }
+
+        public RouterPage(Type xamlFile)
+        {
+            _pageName = xamlFile.ToString();
             _xamlFile = xamlFile;
         }
 

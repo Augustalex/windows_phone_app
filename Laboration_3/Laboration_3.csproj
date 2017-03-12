@@ -101,6 +101,7 @@
     <Compile Include="Router\Dependency.cs" />
     <Compile Include="Router\Router.cs" />
     <Compile Include="Router\RouterPage.cs" />
+    <Compile Include="Router\ViewController.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
