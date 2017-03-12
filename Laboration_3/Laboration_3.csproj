@@ -98,9 +98,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="GlobalClass.cs" />
-    <Compile Include="Views\EditRoomView.xaml.cs">
-      <DependentUpon>EditRoomView.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Router\Dependency.cs" />
+    <Compile Include="Router\Router.cs" />
+    <Compile Include="Router\RouterPage.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -127,10 +127,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Views\EditRoomView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
