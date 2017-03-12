@@ -36,7 +36,7 @@ namespace Laboration_3.Views
 
             //await ApplicationViewSwitcher.SwitchAsync(newViewId);
 
-            App.Router.Route("EditRoomView");
+            App.Router.Route("EditRoomView", new EditRoomViewModel());
         }
 
         private void MyRoomBtn_OnClick(object sender, RoutedEventArgs e)

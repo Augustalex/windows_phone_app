@@ -34,13 +34,18 @@ namespace Laboration_3
         public App()
         {
             this.InitializeComponent();
+
             Router.SetupRoutes(new List<RouterPage>
             {
-                new RouterPage("MainPage", typeof(MainPage)),
-                new RouterPage("EditRoomView", typeof(EditRoomView)),
-                new RouterPage("WallEditor", typeof(WallEditor)),
-                new RouterPage("MyRoomsView", typeof(MyRoomsView))
+                new RouterPage(typeof(MainPage)),
+                new RouterPage(typeof(EditRoomView)),
+                new RouterPage(typeof(WallEditor)),
+                new RouterPage(typeof(MyRoomsView))
             });
+            Router.AddGlobalDependencies(
+                new Dependency("RoomRepository", new RoomRepository())    
+            );
+
             Geolocator.DesiredAccuracyInMeters = 10;
             this.Suspending += OnSuspending;
         }

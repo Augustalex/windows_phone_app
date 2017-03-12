@@ -23,10 +23,37 @@ namespace Laboration_3.Views
     /// </summary>
     public sealed partial class EditRoomView : Page
     {
+        EditRoomViewModel ViewModel = new EditRoomViewModel();
+
+        private Dictionary<string, object> dependencies = new Dictionary<string, object>();
+
         public EditRoomView()
         {
             this.InitializeComponent();
 
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            this.dependencies = e.Parameter as Dictionary<string, object>;
+            ViewModel = GetContext();
+            if (!GetContext().PageHasRoomId())
+            {
+                var room = new Room();
+                (dependencies["RoomRepository"] as RoomRepository)?.Save(room);
+            }
+        }
+
+        private EditRoomViewModel GetContext()
+        {
+            if (this.dependencies.ContainsKey("context"))
+            {
+                return dependencies["context"] as EditRoomViewModel;
+            }
+            else
+            {
+                return new EditRoomViewModel();
+            }
         }
 
         private void BackBtn_OnClick(object sender, RoutedEventArgs e)

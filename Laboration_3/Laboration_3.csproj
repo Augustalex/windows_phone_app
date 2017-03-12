@@ -98,6 +98,8 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="GlobalClass.cs" />
+    <Compile Include="Room.cs" />
+    <Compile Include="RoomRepository.cs" />
     <Compile Include="Router\Dependency.cs" />
     <Compile Include="Router\IRouter.cs" />
     <Compile Include="Router\Router.cs" />
@@ -107,6 +109,7 @@
     <Compile Include="Views\EditRoomView.xaml.cs">
       <DependentUpon>EditRoomView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EditRoomViewModel.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
