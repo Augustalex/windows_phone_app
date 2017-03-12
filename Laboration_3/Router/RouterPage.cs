@@ -22,7 +22,7 @@ namespace Laboration_3.Router
 
         public RouterPage(Type xamlFile)
         {
-            _pageName = xamlFile.ToString();
+            _pageName = xamlFile.Name;
             _xamlFile = xamlFile;
         }
 

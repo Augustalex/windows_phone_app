@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
@@ -8,7 +11,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Laboration_3.Router
 {
-    public class Router
+    public class Router : IRouter
     {
         private readonly List<string> _viewHistory = new List<string>();
         private readonly Dictionary<string, RouterPage> _pages = new Dictionary<string, RouterPage>();
