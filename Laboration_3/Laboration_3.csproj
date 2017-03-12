@@ -99,6 +99,7 @@
     </Compile>
     <Compile Include="GlobalClass.cs" />
     <Compile Include="Router\Dependency.cs" />
+    <Compile Include="Router\IRouter.cs" />
     <Compile Include="Router\Router.cs" />
     <Compile Include="Router\RouterFrame.cs" />
     <Compile Include="Router\RouterPage.cs" />
