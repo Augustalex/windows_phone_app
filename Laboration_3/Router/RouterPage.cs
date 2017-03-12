@@ -12,6 +12,7 @@ namespace Laboration_3.Router
         private readonly Type _xamlFile;
         private readonly Dictionary<string, object> _dependencies = new Dictionary<string, object>();
         private readonly string _pageName;
+        private Frame _frame;
 
         public RouterPage(string pageName, Type xamlFile)
         {
@@ -42,15 +43,18 @@ namespace Laboration_3.Router
 
         public Frame Load(object contextDependencies = null)
         {
-            var frame = new Frame();
-            frame.Navigate(this._xamlFile, this._dependencies);
+            if (_frame == null)
+            {
+                _frame = new Frame();
+                _frame.Navigate(this._xamlFile, this._dependencies);
+            }
 
             if (contextDependencies != null)
             {
                 this._dependencies["context"] = contextDependencies;
             }
 
-            return frame;
+            return _frame;
         }
     }
 }
