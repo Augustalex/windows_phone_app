@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Laboration_3.Router
 {
-    public class Router
+    class Router
     {
         private readonly List<string> _viewHistory = new List<string>();
         private readonly Dictionary<string, Frame> _visited = new Dictionary<string, Frame>();
