@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -25,6 +26,7 @@ namespace Laboration_3
     sealed partial class App : Application
     {
         public static Router.Router Router = new Router.Router();
+        public static Geolocator Geolocator = new Geolocator();
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -32,13 +34,19 @@ namespace Laboration_3
         public App()
         {
             this.InitializeComponent();
+
             Router.SetupRoutes(new List<RouterPage>
             {
-                new RouterPage("MainPage", typeof(MainPage)),
-                new RouterPage("EditRoomView", typeof(EditRoomView)),
-                new RouterPage("WallEditor", typeof(WallEditor)),
-                new RouterPage("MyRoomsView", typeof(MyRoomsView))
+                new RouterPage(typeof(MainPage)),
+                new RouterPage(typeof(EditRoomView)),
+                new RouterPage(typeof(WallEditor)),
+                new RouterPage(typeof(MyRoomsView))
             });
+            Router.AddGlobalDependencies(
+                new Dependency("RoomRepository", new RoomRepository())    
+            );
+
+            Geolocator.DesiredAccuracyInMeters = 10;
             this.Suspending += OnSuspending;
         }
 
