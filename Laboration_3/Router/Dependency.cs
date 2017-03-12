@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Laboration_3.Router
 {
-    class Dependency
+    public class Dependency
     {
         public string Name { get; }
         public object DependencyObject { get; }

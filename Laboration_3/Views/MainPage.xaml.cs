@@ -19,22 +19,24 @@ namespace Laboration_3.Views
             this.InitializeComponent();
         }
 
-        private async void NewRoomBtn_OnClick(object sender, RoutedEventArgs e)
+        private void NewRoomBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            CoreApplicationView newView = CoreApplication.CreateNewView();
-            int newViewId = 0;
-            await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                Frame newFrame = new Frame();
-                newFrame.Navigate(typeof(EditRoomView), null);
-                Window.Current.Content = newFrame;
-                Window.Current.Activate();
+            //CoreApplicationView newView = CoreApplication.CreateNewView();
+            //int newViewId = 0;
+            //await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            //{
+            //    Frame newFrame = new Frame();
+            //    newFrame.Navigate(typeof(EditRoomView), null);
+            //    Window.Current.Content = newFrame;
+            //    Window.Current.Activate();
 
-                newViewId = ApplicationView.GetForCurrentView().Id;
+            //    newViewId = ApplicationView.GetForCurrentView().Id;
 
-            });
+            //});
 
-            await ApplicationViewSwitcher.SwitchAsync(newViewId);
+            //await ApplicationViewSwitcher.SwitchAsync(newViewId);
+
+            App.Router.Route("EditRoomView");
         }
 
         private void MyRoomBtn_OnClick(object sender, RoutedEventArgs e)
