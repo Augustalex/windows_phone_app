@@ -11,7 +11,6 @@ namespace Laboration_3.Router
     public class Router
     {
         private readonly List<string> _viewHistory = new List<string>();
-        private readonly Dictionary<string, Frame> _visited = new Dictionary<string, Frame>();
         private readonly Dictionary<string, RouterPage> _pages = new Dictionary<string, RouterPage>();
 
         private int _checkpointIndex = 0;
@@ -25,7 +24,8 @@ namespace Laboration_3.Router
 
         public void Route(string viewName, object contextDependencies = null)
         {
-            this._container.Content = VisitPage(viewName, contextDependencies);
+            _viewHistory.Add(viewName);
+            this._container.Content = _pages[viewName].Load(contextDependencies);
         }
 
         public void CheckpointRoute(string viewName, object contextDependencies = null)
@@ -44,21 +44,6 @@ namespace Laboration_3.Router
             Route(this._viewHistory[_checkpointIndex]);
         }
 
-        private Frame VisitPage(string viewName, object contextDependencies = null)
-        {
-            _viewHistory.Add(viewName);
-
-            if (_visited.ContainsKey(viewName))
-            {
-                return _visited[viewName];
-            }
-            else
-            {
-                var frame = _pages[viewName].Load(contextDependencies);
-                _visited[viewName] = frame;
-                return frame;
-            }
-        }
         public void SetupRoutes(List<RouterPage> routerPages)
         {
             foreach (var page in routerPages)
