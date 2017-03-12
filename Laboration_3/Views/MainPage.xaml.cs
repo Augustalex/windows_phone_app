@@ -1,4 +1,8 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
+using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -15,10 +19,22 @@ namespace Laboration_3.Views
             this.InitializeComponent();
         }
 
-        private void NewRoomBtn_OnClick(object sender, RoutedEventArgs e)
+        private async void NewRoomBtn_OnClick(object sender, RoutedEventArgs e)
         {
+            CoreApplicationView newView = CoreApplication.CreateNewView();
+            int newViewId = 0;
+            await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                Frame newFrame = new Frame();
+                newFrame.Navigate(typeof(EditRoomView), null);
+                Window.Current.Content = newFrame;
+                Window.Current.Activate();
 
-            //TODO: Open new view
+                newViewId = ApplicationView.GetForCurrentView().Id;
+
+            });
+
+            await ApplicationViewSwitcher.SwitchAsync(newViewId);
         }
 
         private void MyRoomBtn_OnClick(object sender, RoutedEventArgs e)
