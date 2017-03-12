@@ -1,6 +1,6 @@
 ﻿using Windows.Devices.Geolocation;
 
-namespace Laboration_3
+namespace Laboration_3.Models
 {
     public class Room
     {

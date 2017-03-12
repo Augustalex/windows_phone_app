@@ -1,6 +1,6 @@
 ﻿using Windows.UI.Xaml.Media;
 
-namespace Laboration_3
+namespace Laboration_3.Models
 {
     public class Wall
     {

@@ -98,7 +98,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="GlobalClass.cs" />
-    <Compile Include="Room.cs" />
+    <Compile Include="Models\Room.cs" />
     <Compile Include="RoomRepository.cs" />
     <Compile Include="Router\Dependency.cs" />
     <Compile Include="Router\IRouter.cs" />
@@ -120,7 +120,7 @@
     <Compile Include="Views\WallEditor.xaml.cs">
       <DependentUpon>WallEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Wall.cs" />
+    <Compile Include="Models\Wall.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
