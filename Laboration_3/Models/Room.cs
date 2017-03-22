@@ -1,10 +1,13 @@
-﻿using Windows.Devices.Geolocation;
+﻿using System.Collections.Generic;
+using Windows.Devices.Geolocation;
 
 namespace Laboration_3.Models
 {
     public class Room
     {
-        public int Id { get; }
+        //TODO: ID count. Where is it supposed to be?
+
+        public int Id { get; set; }
 
         public string Name { get; set; }
         
@@ -12,7 +15,7 @@ namespace Laboration_3.Models
 
         public int Size { get; set; }
 
-        public Geoposition Coordinates { get; set; }
+        public double[] Coordinates { get; set; }
 
         public Wall NorthWall { get; set; }
 

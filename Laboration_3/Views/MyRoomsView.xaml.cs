@@ -26,5 +26,15 @@ namespace Laboration_3.Views
         {
             this.InitializeComponent();
         }
+
+        private void BackBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            App.Router.Route("WallEditor");
+        }
+
+        private void HomeBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            App.Router.Route("MainPage");
+        }
     }
 }

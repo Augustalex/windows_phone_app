@@ -7,7 +7,24 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Grid Background="#1F2421">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/> <!--0-->
+            <RowDefinition Height="50"/> <!--1-->
+            <RowDefinition Height="50"/> <!--2-->
+            <RowDefinition Height="50"/> <!--3--> 
+            <RowDefinition Height="50"/> <!--4-->
+            <RowDefinition Height="150"/> <!--5-->
+            <RowDefinition Height="50"/> <!--6-->
+            <RowDefinition Height="200"/> <!--7-->
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Button Width="60" Height="50" x:Name="BackBtn" Click="BackBtn_OnClick" 
+                    FontSize="27" FontFamily="Segoe UI Symbol" Content="&#xE2A8;"
+                    Foreground="#9CC5A1"/>
+            <Button Width="60" Height="50" HorizontalAlignment="Right" Foreground="#9CC5A1"
+                    FontSize="27" FontFamily="Segoe UI Symbol" Content="&#x2302;"
+                    Click="HomeBtn_OnClick"/>
+        </Grid>
     </Grid>
 </Page>

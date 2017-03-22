@@ -11,47 +11,52 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/> <!--0-->
             <RowDefinition Height="50"/> <!--1-->
-            <RowDefinition Height="50"/> <!--2-->
+            <RowDefinition Height="150"/> <!--2-->
             <RowDefinition Height="50"/> <!--3--> 
             <RowDefinition Height="50"/> <!--4-->
-            <RowDefinition Height="150"/> <!--5-->
+            <RowDefinition Height="150"/><!--5-->
             <RowDefinition Height="50"/> <!--6-->
-            <RowDefinition Height="200"/> <!--7-->
+            <RowDefinition Height="200"/><!--7-->
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Button Width="60" Height="50" x:Name="BackBtn" Click="BackBtn_OnClick" 
                     FontSize="27" FontFamily="Segoe UI Symbol" Content="&#xE2A8;"
                     Foreground="#9CC5A1"/>
         </Grid>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Top">
+        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Top"><!--Name-->
             <TextBlock Foreground="#216869" Text="Name:"
                        Padding="30" VerticalAlignment="Center" Width="120"/>
-            <TextBox Height="30" Width="100" Padding="30" VerticalAlignment="Center"
+            <TextBox Height="30" Width="150"
+                     Foreground="Black" Background="White" PlaceholderText="Name..."
                      x:Name="nameBox"/>
         </StackPanel>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Top">
+        <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Top"><!--Description-->
             <TextBlock Foreground="#216869" Text="Description:"
                        VerticalAlignment="Center" Width="120"
                        Padding="20"/>
-            <TextBox Height="30" Width="200" Padding="30" VerticalAlignment="Center"
-                     x:Name="descriptionBox"/>
+            <TextBox Height="110" Width="200"
+                     Foreground="Black" Background="White" PlaceholderText="Enter your description.."
+                     x:Name="descriptionBox"
+                     AcceptsReturn="True" TextWrapping="Wrap"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"/>
         </StackPanel>
-        <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center">
+        <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center"><!--Coordinates-->
             <TextBlock Foreground="#216869" Text="Coordinates:"
                        VerticalAlignment="Center" Width="120"
                        Padding="20"/>
             <TextBlock Foreground="#9CC5A1" VerticalAlignment="Center"
-                       Text="test" Width="120" x:Name="coordinatesBlock"/>
+                       Text="test" Width="150" x:Name="coordinatesBlock"/>
             <Button Width="100" Height="30" 
                     FontSize="10" Content="Get Coordinates"
                     Background="#9CC5A1" Foreground="#216869" 
                     x:Name="getCoordsBtn" Click="GetCoordsBtn_OnClick"/>
         </StackPanel>
-        <StackPanel Grid.Row="4" Orientation="Horizontal" VerticalAlignment="Top">
+        <StackPanel Grid.Row="4" Orientation="Horizontal" VerticalAlignment="Top"><!--Size-->
             <TextBlock Foreground="#216869" Text="Size:"
                        VerticalAlignment="Center" Width="120"
                        Padding="30"/>
-            <TextBox Height="30" Width="100" Padding="30" VerticalAlignment="Center"
+            <TextBox Height="30" Width="100"
+                     Foreground="Black" Background="White" PlaceholderText="Size..."
                      x:Name="sizeBox"/>
         </StackPanel>
         <StackPanel Grid.Row="6">

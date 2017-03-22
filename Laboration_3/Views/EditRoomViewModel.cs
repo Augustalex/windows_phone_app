@@ -19,7 +19,7 @@ namespace Laboration_3.Views
             RoomId = id;
         }
 
-        public int RoomId { get; }
+        public static int RoomId { get; set; }
 
         public string RoomName { get; set; }
 

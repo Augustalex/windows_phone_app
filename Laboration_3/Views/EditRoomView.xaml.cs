@@ -24,14 +24,25 @@ namespace Laboration_3.Views
     /// </summary>
     public sealed partial class EditRoomView : Page
     {
-        EditRoomViewModel ViewModel = new EditRoomViewModel();
-
+        private EditRoomViewModel ViewModel = new EditRoomViewModel();
+        private double latitude;
+        private double longitude;
         private Dictionary<string, object> dependencies = new Dictionary<string, object>();
+        private uint? _desireAccuracyInMetersValue = 10;
+        private int roomId;
 
         public EditRoomView()
         {
             this.InitializeComponent();
+            this.roomId = EditRoomViewModel.RoomId;
+            SelectTextInBox(nameBox);
+        }
 
+        public void SelectTextInBox(TextBox box)
+        {
+            box.Focus(FocusState.Keyboard);
+            box.SelectionStart = 0;
+            box.SelectionLength = box.Text.Length;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -41,7 +52,13 @@ namespace Laboration_3.Views
             if (!GetContext().PageHasRoomId())
             {
                 var room = new Room();
-                (dependencies["RoomRepository"] as RoomRepository)?.Save(room);
+                
+            }
+            else
+            {
+                var room = RoomRepository.Fetch(roomId);
+                nameBox.Text = room.Name;
+                //todo: this shit
             }
         }
 
@@ -64,22 +81,31 @@ namespace Laboration_3.Views
 
         private async void GetCoordsBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                Geoposition coords = await App.Geolocator.GetGeopositionAsync(
-                    maximumAge: TimeSpan.FromMinutes(5),
-                    timeout: TimeSpan.FromSeconds(10)
-                );
 
-                coordinatesBlock.Text = coords.Coordinate.Point.Position.Latitude.ToString("0.00") + " " +
-                                        coords.Coordinate.Point.Position.Longitude.ToString("0.00");
+            var accessStatus = await Geolocator.RequestAccessAsync();
+            switch (accessStatus)
+            {
+                case GeolocationAccessStatus.Allowed:
+                    
+                    Geolocator geolocator = new Geolocator { DesiredAccuracyInMeters = _desireAccuracyInMetersValue };
+
+                    Geoposition pos = await geolocator.GetGeopositionAsync();
+
+                    latitude = pos.Coordinate.Point.Position.Latitude;
+                    longitude = pos.Coordinate.Point.Position.Longitude;
+
+                    coordinatesBlock.Text = latitude.ToString() + " : " + longitude.ToString();
+                    break;
+
+                case GeolocationAccessStatus.Denied:
+                    coordinatesBlock.Text = "Location request denied.";
+                    break;
+
+                case GeolocationAccessStatus.Unspecified:
+                    coordinatesBlock.Text = "Unspecified error.";
+                    break;
             }
 
-            catch (Exception ex)
-            {
-                coordinatesBlock.Text = "location disabled.";
-            }
-            
         }
 
         private void WallEditorBtn_OnClick(object sender, RoutedEventArgs e)
@@ -89,10 +115,33 @@ namespace Laboration_3.Views
 
         private void SaveBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            var name = nameBox.Text;
-            var description = descriptionBox.Text;
-            var size = Convert.ToInt32(sizeBox.Text);
-        }
+            if (roomId == -1)
+            {
+                var thisRoom = new Room
+                {
+                    Id = GlobalClass.GetNextId(),
+                    Name = nameBox.Text,
+                    Description = descriptionBox.Text,
+                    Coordinates = new []{latitude,longitude},
+                    Size = Convert.ToInt32(sizeBox.Text)
+                };
+                RoomRepository.Save(thisRoom);
+            }
+            else
+            {
+                var tempRoom = RoomRepository.Fetch(roomId);
+                RoomRepository.Remove(roomId);
+                tempRoom.Id = roomId;
+                tempRoom.Name = nameBox.Text;
+                tempRoom.Description = descriptionBox.Text;
+                tempRoom.Coordinates = new[] {latitude, longitude};
+                tempRoom.Size = Convert.ToInt32(sizeBox.Text);
+                //todo: add walls
+                RoomRepository.Save(tempRoom);
+            }
 
+            App.Router.Route("MyRoomsView");
+
+        }
     }
 }

@@ -97,15 +97,16 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GlobalClass.cs" />
+    <Compile Include="Global\GlobalClass.cs" />
     <Compile Include="Models\Room.cs" />
-    <Compile Include="RoomRepository.cs" />
+    <Compile Include="Global\RoomRepository.cs" />
     <Compile Include="Router\Dependency.cs" />
     <Compile Include="Router\IRouter.cs" />
     <Compile Include="Router\Router.cs" />
     <Compile Include="Router\RouterFrame.cs" />
     <Compile Include="Router\RouterPage.cs" />
     <Compile Include="Router\ViewController.cs" />
+    <Compile Include="Global\SuspensionManager.cs" />
     <Compile Include="Views\EditRoomView.xaml.cs">
       <DependentUpon>EditRoomView.xaml</DependentUpon>
     </Compile>
