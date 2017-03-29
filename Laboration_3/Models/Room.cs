@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
-using Windows.Devices.Geolocation;
+﻿using System;
+using System.IO;
+using System.Xml.Serialization;
+
 
 namespace Laboration_3.Models
 {
-    public class Room
+    [System.Serializable]
+    public class Room 
     {
         //TODO: ID count. Where is it supposed to be?
 
@@ -28,5 +31,6 @@ namespace Laboration_3.Models
         public Wall Roof { get; set; }
 
         public Wall Floor { get; set; }
+
     }
 }

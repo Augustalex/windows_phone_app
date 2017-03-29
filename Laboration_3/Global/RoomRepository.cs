@@ -1,25 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Devices.PointOfService;
-using Windows.Media.Audio;
-using Windows.Storage;
-using Windows.Storage.Streams;
-using Windows.UI.Xaml.Automation;
 using Laboration_3.Models;
 using Newtonsoft.Json;
 
 namespace Laboration_3
 {
+    [Serializable]
     public class RoomRepository
     {
         public static Dictionary<int, Room> offlineStorage = new Dictionary<int, Room>();
-       
+        string filePath = "database.csv";
+
         //serialisera till json
         public RoomRepository()
         {
@@ -46,22 +38,44 @@ namespace Laboration_3
             offlineStorage.Remove(id);
         }
 
-        private void SaveToFile()
+        private static void WriteToJsonFile<T>(string filePath, bool append = false) where T : new()
         {
-            var storageJson = JsonConvert.SerializeObject(offlineStorage.ToString());
-            File.WriteAllText("database.txt", storageJson);
+            TextWriter writer = null;
+            try
+            {
+                var contentsToWriteToFile = JsonConvert.SerializeObject(offlineStorage);
+                using (var fs = new FileStream("database.txt", FileMode.Open, FileAccess.Read))
+                {
+                    writer = new StreamWriter(fs);
+                    writer.Write(contentsToWriteToFile);
+                }
 
+            }
+            finally
+            {
+                if (writer != null)
+                    writer.Flush();
+                writer.Dispose();
+            }
         }
 
-        private async void FetchFromFile()
+        private static T ReadFromJsonFile<T>(string filePath) where T : new()
         {
-            //var s = new FileStream();
-            //using (StreamReader sr = new StreamReader("~/database.txt"))
-            //{
-            //    var offlineStorage = JsonConvert.DeserializeObject<Dictionary<int, Room>>(sr.ReadToEnd());
-            //}
-
-
+            TextReader reader = null;
+            try
+            {
+                using(var fs = new FileStream("database.txt", FileMode.Open, FileAccess.Read))
+                {
+                    reader = new StreamReader(fs);
+                    var fileContents = reader.ReadToEnd();
+                    return JsonConvert.DeserializeObject<T>(fileContents);
+                }
+            }
+            finally
+            {
+                if (reader != null)
+                    reader.Dispose();
+            }
         }
     }
 }
