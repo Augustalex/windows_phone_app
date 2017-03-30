@@ -10,12 +10,12 @@ namespace Laboration_3
     public class RoomRepository
     {
         public static Dictionary<int, Room> offlineStorage = new Dictionary<int, Room>();
-        string filePath = "database.csv";
+        private static string filePath = "database.txt";
 
-        //serialisera till json
+        
         public RoomRepository()
         {
-            //FetchFromFile();
+            
         }
 
         public static Room Fetch(int id)
@@ -31,6 +31,7 @@ namespace Laboration_3
         public static void Save(Room room)
         {
             offlineStorage.Add(room.Id, room);
+            WriteToJsonFile();
         }
 
         public static void Remove(int id)
@@ -38,44 +39,51 @@ namespace Laboration_3
             offlineStorage.Remove(id);
         }
 
-        private static void WriteToJsonFile<T>(string filePath, bool append = false) where T : new()
+        private static void WriteToJsonFile()
         {
-            TextWriter writer = null;
-            try
-            {
-                var contentsToWriteToFile = JsonConvert.SerializeObject(offlineStorage);
-                using (var fs = new FileStream("database.txt", FileMode.Open, FileAccess.Read))
-                {
-                    writer = new StreamWriter(fs);
-                    writer.Write(contentsToWriteToFile);
-                }
 
-            }
-            finally
+            File.WriteAllText("database.json", JsonConvert.SerializeObject(offlineStorage));
+
+            // serialize JSON directly to a file
+            using (StreamWriter file = File.CreateText("database.json"))
             {
-                if (writer != null)
-                    writer.Flush();
-                writer.Dispose();
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(file, offlineStorage);
             }
+
         }
 
-        private static T ReadFromJsonFile<T>(string filePath) where T : new()
+
+        public static void ReadFromJsonFile()
         {
-            TextReader reader = null;
-            try
+            //TextReader reader = null;
+            //try
+            //{
+            //    using(var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            //    {
+            //        reader = new StreamReader(fs);
+            //        var fileContents = reader.ReadToEnd();
+            //        return JsonConvert.DeserializeObject<T>(fileContents);
+            //    }
+            //}
+            //finally
+            //{
+            //    if (reader != null)
+            //        reader.Dispose();
+            //}
+
+            // read file into a string and deserialize JSON to a type
+            Dictionary<int, Room> storage = JsonConvert.DeserializeObject<Dictionary<int, Room>>(File.ReadAllText("database.json"));
+            
+            // deserialize JSON directly from a file
+            using(StreamReader file = File.OpenText("database.json"))
             {
-                using(var fs = new FileStream("database.txt", FileMode.Open, FileAccess.Read))
-                {
-                    reader = new StreamReader(fs);
-                    var fileContents = reader.ReadToEnd();
-                    return JsonConvert.DeserializeObject<T>(fileContents);
-                }
+                 JsonSerializer serializer = new JsonSerializer();
+                 Dictionary<int, Room> storage2 = (Dictionary<int, Room>)serializer.Deserialize(file, typeof(Dictionary<int, Room>));
             }
-            finally
-            {
-                if (reader != null)
-                    reader.Dispose();
-            }
+
+            offlineStorage = storage;
         }
+
     }
 }

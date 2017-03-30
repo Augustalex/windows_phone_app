@@ -1,17 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Devices.Geolocation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Laboration_3.Models;
 
@@ -34,7 +25,7 @@ namespace Laboration_3.Views
         public EditRoomView()
         {
             this.InitializeComponent();
-            this.roomId = EditRoomViewModel.RoomId;
+            this.roomId = ViewModel.RoomId;
             SelectTextInBox(nameBox);
         }
 
@@ -76,7 +67,7 @@ namespace Laboration_3.Views
 
         private void BackBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            App.Router.Route("MainPage");
+            App.Router.RevertToCheckpoint();
         }
 
         private async void GetCoordsBtn_OnClick(object sender, RoutedEventArgs e)
@@ -113,18 +104,38 @@ namespace Laboration_3.Views
             App.Router.Route("WallEditor");
         }
 
+        private void UpdateViewModel()
+        {
+            ViewModel.RoomName = nameBox.Text;
+            if(sizeBox.Text.Length >= 1) ViewModel.RoomSize = Convert.ToInt32(sizeBox.Text);
+            ViewModel.RoomDescription = descriptionBox.Text;
+            ViewModel.Coordinates = new[] { latitude, longitude };
+            ViewModel.RoomId = RoomRepository.offlineStorage.Count + 1;
+        }
+
+        private void ClearFields()
+        {
+            nameBox.Text = "";
+            sizeBox.Text = "";
+            descriptionBox.Text = "";
+            coordinatesBlock.Text = "";
+        }
+
         private void SaveBtn_OnClick(object sender, RoutedEventArgs e)
         {
+            UpdateViewModel();
+           
             if (roomId == -1)
             {
                 var thisRoom = new Room
                 {
-                    Id = GlobalClass.GetNextId(),
-                    Name = nameBox.Text,
-                    Description = descriptionBox.Text,
-                    Coordinates = new []{latitude,longitude},
-                    Size = Convert.ToInt32(sizeBox.Text)
+                    Id = ViewModel.RoomId,
+                    Name = ViewModel.RoomName,
+                    Description = ViewModel.RoomDescription,
+                    Coordinates = ViewModel.Coordinates,
+                    Size = ViewModel.RoomSize
                 };
+                //roomId = thisRoom.Id;
                 RoomRepository.Save(thisRoom);
             }
             else
@@ -137,9 +148,12 @@ namespace Laboration_3.Views
                 tempRoom.Coordinates = new[] {latitude, longitude};
                 tempRoom.Size = Convert.ToInt32(sizeBox.Text);
                 //todo: add walls
+
                 RoomRepository.Save(tempRoom);
             }
 
+            ClearFields();
+            App.Router.CheckpointRoute("EditRoomView", ViewModel);
             App.Router.Route("MyRoomsView");
 
         }

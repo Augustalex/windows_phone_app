@@ -19,15 +19,15 @@ namespace Laboration_3.Views
             RoomId = id;
         }
 
-        public static int RoomId { get; set; }
+        public int RoomId { get; set; }
 
         public string RoomName { get; set; }
 
         public string RoomDescription { get; set; }
 
         public int RoomSize { get; set; }
-    
-        public Geoposition RoomCoords { get; set; }
+
+        public double[] Coordinates { get; set; }
 
         public bool PageHasRoomId()
         {

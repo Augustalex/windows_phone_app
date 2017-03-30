@@ -21,11 +21,13 @@ namespace Laboration_3.Views
 
         private void NewRoomBtn_OnClick(object sender, RoutedEventArgs e)
         {
+            App.Router.CheckpointRoute("MainPage");
             App.Router.Route("EditRoomView", new EditRoomViewModel());
         }
 
         private void MyRoomBtn_OnClick(object sender, RoutedEventArgs e)
         {
+            App.Router.CheckpointRoute("MainPage");
             App.Router.Route("MyRoomsView");
         }
 

@@ -1,20 +1,11 @@
-﻿using System;
+﻿using Laboration_3.Models;
+using Laboration_3.Router;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Color = Windows.UI.Color;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -25,15 +16,19 @@ namespace Laboration_3.Views
     /// </summary>
     public sealed partial class MyRoomsView : Page
     {
+        
         public MyRoomsView()
         {
             this.InitializeComponent();
+        }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
             ShowRoomsList();
         }
 
         private void BackBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            App.Router.Route("WallEditor");
+            App.Router.RevertToCheckpoint();
         }
 
         private void HomeBtn_OnClick(object sender, RoutedEventArgs e)
@@ -43,17 +38,29 @@ namespace Laboration_3.Views
 
         private void ShowRoomsList()
         {
-            for (int i = 0; i < RoomRepository.offlineStorage.Count; i++)
+            //for (int i = 1; i < RoomRepository.offlineStorage.Count+1; i++)
+            //{
+            //    var room = RoomRepository.offlineStorage[i];
+            //    //var color = TypeDescriptor.GetConverter(typeof(Color)).ConvertFromString(("#9CC5A1"));
+            //    var listViewItem = new ListViewItem
+            //    {
+            //        Content = "ID: " + room.Id + " Name: " + room.Name ,
+            //        Foreground = new SolidColorBrush(Windows.UI.Colors.Honeydew)
+            //    };
+            //    MyRoomsList.Items?.Add(listViewItem);
+            //}
+
+            foreach(KeyValuePair<int, Room> pair in RoomRepository.offlineStorage)
             {
-                var room = RoomRepository.offlineStorage[i];
-                var color = TypeDescriptor.GetConverter(typeof(Color)).ConvertFromString(("#9CC5A1"));
-                var listViewItem = new ListViewItem
+                var room = pair.Value;
+                var listItem = new ListViewItem
                 {
-                    Content = room.Name + room.Id,
-                    Foreground = new SolidColorBrush((Color) color)
+                    Content = "ID: " + room.Id + " Name: " + room.Name,
+                    Foreground = new SolidColorBrush(Windows.UI.Colors.Honeydew)
                 };
-                MyRoomsList.Items?.Add(listViewItem);
+                MyRoomsList.Items.Add(listItem);
             }
+            MyRoomsList.UpdateLayout();
         }
     }
 }

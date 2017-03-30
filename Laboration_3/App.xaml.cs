@@ -35,6 +35,8 @@ namespace Laboration_3
                 new Dependency("RoomRepository", new RoomRepository())    
             );
 
+            RoomRepository.ReadFromJsonFile();
+
             this.Suspending += OnSuspending;
             
         }
