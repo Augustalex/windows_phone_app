@@ -22,6 +22,9 @@
             <Button Width="60" Height="50" x:Name="BackBtn" Click="BackBtn_OnClick" 
                     FontSize="27" FontFamily="Segoe UI Symbol" Content="&#xE2A8;"
                     Foreground="#9CC5A1"/>
+            <Button Width="60" Height="50" x:Name="ReloadBtn" Click="ReloadBtn_OnClick"
+                    FontSize="27" FontFamily="Segoe UI Symbol" Content="&#xe117;"
+                    Foreground="#9CC5A1" HorizontalAlignment="Center"/>
             <Button Width="60" Height="50" HorizontalAlignment="Right" Foreground="#9CC5A1"
                     FontSize="27" FontFamily="Segoe UI Symbol" Content="&#x2302;"
                     Click="HomeBtn_OnClick"/>
@@ -29,7 +32,6 @@
         <Grid Grid.Row="2">
             <ListView x:Name="MyRoomsList">
                 <!--ListViewItems goes here-->
-                
             </ListView>
         </Grid>
     </Grid>

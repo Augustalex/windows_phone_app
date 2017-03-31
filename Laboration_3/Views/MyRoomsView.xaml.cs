@@ -30,6 +30,11 @@ namespace Laboration_3.Views
         {
             App.Router.RevertToCheckpoint();
         }
+        private void ReloadBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            MyRoomsList.Items.Clear();
+            ShowRoomsList();
+        }
 
         private void HomeBtn_OnClick(object sender, RoutedEventArgs e)
         {

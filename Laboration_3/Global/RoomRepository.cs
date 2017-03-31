@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using Laboration_3.Models;
 using Newtonsoft.Json;
+using System.IO.IsolatedStorage;
+using Windows.Storage;
 
 namespace Laboration_3
 {
@@ -31,7 +33,7 @@ namespace Laboration_3
         public static void Save(Room room)
         {
             offlineStorage.Add(room.Id, room);
-            WriteToJsonFile();
+            WriteToJsonFileAsync();
         }
 
         public static void Remove(int id)
@@ -39,50 +41,33 @@ namespace Laboration_3
             offlineStorage.Remove(id);
         }
 
-        private static void WriteToJsonFile()
+        private static async System.Threading.Tasks.Task WriteToJsonFileAsync()
         {
-
-            File.WriteAllText("database.json", JsonConvert.SerializeObject(offlineStorage));
-
-            // serialize JSON directly to a file
-            using (StreamWriter file = File.CreateText("database.json"))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Serialize(file, offlineStorage);
-            }
+            string json = JsonConvert.SerializeObject(offlineStorage, Formatting.Indented);
+            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+            StorageFile file = await localFolder.GetFileAsync("database.json");
+            await FileIO.WriteTextAsync(file, json);
 
         }
 
 
-        public static void ReadFromJsonFile()
+        public static async System.Threading.Tasks.Task ReadFromJsonFileAsync()
         {
-            //TextReader reader = null;
-            //try
-            //{
-            //    using(var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
-            //    {
-            //        reader = new StreamReader(fs);
-            //        var fileContents = reader.ReadToEnd();
-            //        return JsonConvert.DeserializeObject<T>(fileContents);
-            //    }
-            //}
-            //finally
-            //{
-            //    if (reader != null)
-            //        reader.Dispose();
-            //}
-
-            // read file into a string and deserialize JSON to a type
-            Dictionary<int, Room> storage = JsonConvert.DeserializeObject<Dictionary<int, Room>>(File.ReadAllText("database.json"));
-            
-            // deserialize JSON directly from a file
-            using(StreamReader file = File.OpenText("database.json"))
+            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+            if (localFolder.TryGetItemAsync("database.json") == null)
             {
-                 JsonSerializer serializer = new JsonSerializer();
-                 Dictionary<int, Room> storage2 = (Dictionary<int, Room>)serializer.Deserialize(file, typeof(Dictionary<int, Room>));
+                StorageFile file = await localFolder.CreateFileAsync("database.json");
+                Dictionary<int, Room> storage = JsonConvert.DeserializeObject<Dictionary<int, Room>>(file.Path);
+                offlineStorage = storage;
+            }
+            else
+            {
+                StorageFile file = await localFolder.GetFileAsync("database.json");
+                // read file into a string and deserialize JSON to a type
+                Dictionary<int, Room> storage = JsonConvert.DeserializeObject<Dictionary<int, Room>>(File.ReadAllText(file.Path));
+                offlineStorage = storage;
             }
 
-            offlineStorage = storage;
         }
 
     }

@@ -35,7 +35,7 @@ namespace Laboration_3
                 new Dependency("RoomRepository", new RoomRepository())    
             );
 
-            RoomRepository.ReadFromJsonFile();
+            RoomRepository.ReadFromJsonFileAsync();
 
             this.Suspending += OnSuspending;
             
@@ -113,10 +113,10 @@ namespace Laboration_3
         /// </summary>
         /// <param name="sender">The source of the suspend request.</param>
         /// <param name="e">Details about the suspend request.</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
+        private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Save application state and stop any background activity
+            await SuspensionManager.SaveAsync();
             deferral.Complete();
         }
     }
