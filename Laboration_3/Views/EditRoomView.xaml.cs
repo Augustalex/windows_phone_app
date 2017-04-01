@@ -103,7 +103,8 @@ namespace Laboration_3.Views
 
         private void WallEditorBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            App.Router.Route("WallEditor");
+            App.Router.CheckpointRoute("EditRoomView");
+            App.Router.Route("WallEditor", new WallViewModel(roomId));
         }
 
         private void UpdateViewModel()

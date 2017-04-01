@@ -11,10 +11,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/> <!--0-->
             <RowDefinition Height="50"/> <!--1-->
-            <RowDefinition Height="50"/> <!--2-->
-            <RowDefinition Height="50"/> <!--3--> 
-            <RowDefinition Height="50"/> <!--4-->
-            <RowDefinition Height="150"/> <!--5-->
+            <RowDefinition Height="150"/> <!--2-->
+            <RowDefinition Height="5"/> <!--3--> 
+            <RowDefinition Height="300"/> <!--4-->
+            <RowDefinition Height="1"/> <!--5-->
             <RowDefinition Height="50"/> <!--6-->
             <RowDefinition Height="200"/> <!--7-->
         </Grid.RowDefinitions>
@@ -22,6 +22,35 @@
             <Button Width="60" Height="50" x:Name="BackBtn" Click="BackBtn_OnClick" 
                     FontSize="27" FontFamily="Segoe UI Symbol" Content="&#xE2A8;"
                     Foreground="#9CC5A1"/>
+            <Button Width="60" Height="50" x:Name="SaveBtn" Click="SaveBtn_OnClick"
+                    FontSize="27" FontFamily="Segoe UI Symbol" Content="&#xE105;"
+                    Foreground="#9CC5A1" HorizontalAlignment="Right"/>
+        </Grid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Top">
+            <!--Name-->
+            <TextBlock Foreground="#216869" Text="Name:"
+                       Padding="30" VerticalAlignment="Center" Width="120"/>
+            <TextBlock Height="30" Width="150"
+                     Foreground="#216869" Text="{Binding Wall.Title}"
+                     x:Name="nameBlock"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center">
+            <!--Name-->
+            <TextBlock Foreground="#216869" Text="Description:"
+                       Padding="30" VerticalAlignment="Center" Width="120"/>
+            <TextBox Height="110" Width="200"
+                     Foreground="Black" Background="White" PlaceholderText="Enter your description.."
+                     x:Name="descriptionBox"
+                     AcceptsReturn="True" TextWrapping="Wrap"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+        </StackPanel>
+        <StackPanel Grid.Row="4" x:Name="imageViewer" Background="DarkSlateGray" DragLeave="ImageViewer_OnDragLeave">
+            <Image x:Name="imagePreview"></Image>
+        </StackPanel>
+        <Grid Grid.Row="6">
+            <Button Height="50" Width="100" x:Name="cameraBtn" Click="CameraBtn_OnClick"
+                    HorizontalAlignment="Center" FontFamily="Segoe UI Symbol" Content="&#xe114;"
+                    Foreground="#9CC5A1" FontSize="27" Background="DarkSlateGray"/>
         </Grid>
     </Grid>
 </Page>

@@ -2,14 +2,15 @@
 
 namespace Laboration_3.Models
 {
+    [System.Serializable]
     public class Wall
     {
-        public int RoomId { get; }
+        public int RoomId { get; set; }
 
         public string Title { get; set; }
 
         public string Description { get; set; }
 
-        public ImageSource Image { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

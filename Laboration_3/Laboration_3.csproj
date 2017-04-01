@@ -121,6 +121,7 @@
       <DependentUpon>WallEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Wall.cs" />
+    <Compile Include="Views\WallViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
