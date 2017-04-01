@@ -22,9 +22,9 @@
             <Button Width="60" Height="50" x:Name="BackBtn" Click="BackBtn_OnClick" 
                     FontSize="27" FontFamily="Segoe UI Symbol" Content="&#xE2A8;"
                     Foreground="#9CC5A1"/>
-            <Button Width="60" Height="50" x:Name="SaveBtn" Click="SaveBtn_OnClick"
+            <!--<Button Width="60" Height="50" x:Name="SaveBtn" Click="SaveBtn_OnClick"
                     FontSize="27" FontFamily="Segoe UI Symbol" Content="&#xE105;"
-                    Foreground="#9CC5A1" HorizontalAlignment="Right"/>
+                    Foreground="#9CC5A1" HorizontalAlignment="Right"/>-->
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Top">
             <!--Name-->

@@ -34,7 +34,7 @@ namespace Laboration_3.Views
 
         public WallEditor()
         {
-            this.roomId = wallViewModel.RoomId;
+            //this.roomId = wallViewModel.RoomId;
             this.InitializeComponent();
         }
         private WallViewModel GetContext()
@@ -52,23 +52,27 @@ namespace Laboration_3.Views
         {
             this.dependencies = e.Parameter as Dictionary<string, object>;
             wallViewModel = GetContext();
+            this.roomId = wallViewModel.RoomId;
+            LoadView();
         }
 
-        private async void UpdateView()
+        private async void LoadView()
         {
             nameBlock.Text = wallViewModel.Title;
+            if (wallViewModel.Description == null) wallViewModel.Description = "";
             descriptionBox.Text = wallViewModel.Description;
-            var picker = new Windows.Storage.Pickers.FileOpenPicker();
-            picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
-            picker.SuggestedStartLocation =
-                Windows.Storage.Pickers.PickerLocationId.PicturesLibrary;
-            picker.FileTypeFilter.Add(".jpg");
-            StorageFile file = await picker.PickSingleFileAsync();
-            if (file != null)
-            {
-                // Application now has read/write access to the picked file
-                imagePreview.Source = new BitmapImage(new Uri(file.Path));
-            }
+            //TODO: try to open image from storage
+            //var picker = new Windows.Storage.Pickers.FileOpenPicker();
+            //picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
+            //picker.SuggestedStartLocation =
+            //    Windows.Storage.Pickers.PickerLocationId.PicturesLibrary;
+            //picker.FileTypeFilter.Add(".jpg");
+            //StorageFile file = await picker.PickSingleFileAsync();
+            //if (file != null)
+            //{
+            //    // Application now has read/write access to the picked file
+            //    imagePreview.Source = new BitmapImage(new Uri(file.Path));
+            //}
         }
 
         private void BackBtn_OnClick(object sender, RoutedEventArgs e)
@@ -111,17 +115,13 @@ namespace Laboration_3.Views
             wallViewModel.ImageUrl = photo.Path;
             SaveImageToFile(photo);
             imagePreview.Source = img;
+            Save();
         }
 
-        private void ImageViewer_OnDragLeave(object sender, DragEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void SaveBtn_OnClick(object sender, RoutedEventArgs e)
+        private void Save()
         {
             var tempRoom = RoomRepository.offlineStorage[roomId];
-            RoomRepository.offlineStorage.Remove(roomId);
+            RoomRepository.Remove(roomId);
 
             switch (wallViewModel.WallId)
             {
@@ -147,6 +147,13 @@ namespace Laboration_3.Views
                     Debug.Write("Invalid ID");
                     break;
             }
+            RoomRepository.Save(tempRoom);
         }
+
+        private void ImageViewer_OnDragLeave(object sender, DragEventArgs e)
+        {
+            //TODO: Check swiping logic and change the wallViewModel accordingly
+        }
+
     }
 }
