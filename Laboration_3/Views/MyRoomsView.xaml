@@ -30,7 +30,7 @@
                     Click="HomeBtn_OnClick"/>
         </Grid>
         <Grid Grid.Row="2">
-            <ListView x:Name="MyRoomsList">
+            <ListView x:Name="MyRoomsList" ItemClick="MyRoomsList_OnItemClick" IsItemClickEnabled="True">
                 <!--ListViewItems goes here-->
             </ListView>
         </Grid>

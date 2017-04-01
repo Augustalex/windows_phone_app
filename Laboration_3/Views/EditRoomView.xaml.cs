@@ -49,6 +49,8 @@ namespace Laboration_3.Views
             {
                 var room = RoomRepository.Fetch(roomId);
                 nameBox.Text = room.Name;
+                descriptionBox.Text = room.Description;
+                sizeBox.Text = room.Size.ToString();
                 //todo: this shit
             }
         }

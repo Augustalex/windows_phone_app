@@ -1,7 +1,9 @@
-﻿using Laboration_3.Models;
+﻿using System;
+using Laboration_3.Models;
 using Laboration_3.Router;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -43,29 +45,37 @@ namespace Laboration_3.Views
 
         private void ShowRoomsList()
         {
-            //for (int i = 1; i < RoomRepository.offlineStorage.Count+1; i++)
-            //{
-            //    var room = RoomRepository.offlineStorage[i];
-            //    //var color = TypeDescriptor.GetConverter(typeof(Color)).ConvertFromString(("#9CC5A1"));
-            //    var listViewItem = new ListViewItem
-            //    {
-            //        Content = "ID: " + room.Id + " Name: " + room.Name ,
-            //        Foreground = new SolidColorBrush(Windows.UI.Colors.Honeydew)
-            //    };
-            //    MyRoomsList.Items?.Add(listViewItem);
-            //}
-
-            foreach(KeyValuePair<int, Room> pair in RoomRepository.offlineStorage)
+            if (RoomRepository.offlineStorage != null)
             {
-                var room = pair.Value;
-                var listItem = new ListViewItem
+                foreach (KeyValuePair<int, Room> pair in RoomRepository.offlineStorage)
                 {
-                    Content = "ID: " + room.Id + " Name: " + room.Name,
-                    Foreground = new SolidColorBrush(Windows.UI.Colors.Honeydew)
-                };
-                MyRoomsList.Items.Add(listItem);
+                    var room = pair.Value;
+
+                    var listItem = new ListViewItem
+                    {
+                        Content = "ID: " + room.Id + " Name: " + room.Name,
+                        Foreground = new SolidColorBrush(Windows.UI.Colors.Honeydew)
+                    };
+                    MyRoomsList.Items.Add(listItem);
+                }
             }
             MyRoomsList.UpdateLayout();
+        }
+
+        private void MyRoomsList_OnItemClick(object sender, ItemClickEventArgs e)
+        {
+            String roomString = (String)e.ClickedItem;
+            Debug.Write(roomString);
+            int id = Convert.ToInt32(roomString[4]);
+            if (char.IsNumber(roomString[5]))
+            {
+                var tmp = Convert.ToInt32(roomString[5]);
+                id = id + tmp;
+            }
+
+            App.Router.CheckpointRoute("MyRoomsView");
+            App.Router.Route("EditRoomView", new EditRoomViewModel(id));
+
         }
     }
 }

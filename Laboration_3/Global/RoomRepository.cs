@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using Laboration_3.Models;
 using Newtonsoft.Json;
@@ -56,16 +57,34 @@ namespace Laboration_3
             StorageFolder localFolder = ApplicationData.Current.LocalFolder;
             if (localFolder.TryGetItemAsync("database.json") == null)
             {
-                StorageFile file = await localFolder.CreateFileAsync("database.json");
-                Dictionary<int, Room> storage = JsonConvert.DeserializeObject<Dictionary<int, Room>>(file.Path);
-                offlineStorage = storage;
+                StorageFile file = await localFolder.CreateFileAsync("database.json", CreationCollisionOption.OpenIfExists);
+                Dictionary<int, Room> storage = JsonConvert.DeserializeObject<Dictionary<int, Room>>(File.ReadAllText(file.Path));
+                foreach (KeyValuePair<int, Room> pair in storage)
+                {
+                    offlineStorage.Add(pair.Key, pair.Value);
+                }
             }
             else
             {
-                StorageFile file = await localFolder.GetFileAsync("database.json");
-                // read file into a string and deserialize JSON to a type
-                Dictionary<int, Room> storage = JsonConvert.DeserializeObject<Dictionary<int, Room>>(File.ReadAllText(file.Path));
-                offlineStorage = storage;
+                try
+                {
+                    StorageFile file = await localFolder.GetFileAsync("database.json");
+                    Dictionary<int, Room> storage = JsonConvert.DeserializeObject<Dictionary<int, Room>>(File.ReadAllText(file.Path));
+                    foreach (KeyValuePair<int, Room> pair in storage)
+                    {
+                        offlineStorage.Add(pair.Key, pair.Value);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.Write(ex.Message);
+                    StorageFile file = await localFolder.CreateFileAsync("database.json", CreationCollisionOption.OpenIfExists);
+                    Dictionary<int, Room> storage = JsonConvert.DeserializeObject<Dictionary<int, Room>>(File.ReadAllText(file.Path));
+                    foreach (KeyValuePair<int, Room> pair in storage)
+                    {
+                        offlineStorage.Add(pair.Key,pair.Value);
+                    }
+                }
             }
 
         }
